@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:12.3 # создаем контейнер на основе образа postgres 12.3
+    ports:
+      - "5432:5432"     # открываем порт  5432
+    environment:        # устанавливаем переменные среды для подключения
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=contacts
+    volumes:            # механизм для управления и сохранения данных, которые могут быть использованы в docker
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql     # после двоеточия описывается где будет лежать этот файл в docker-контейнере
+                                                            # в данном случае файл init.sql будет запущен при запуске контейнера и его содержимое будет использоваться для инициализации БД
